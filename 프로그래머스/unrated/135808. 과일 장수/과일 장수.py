@@ -5,7 +5,7 @@ def solution(k, m, score):
     
     for i in range(len(score)):
         array.append(score[i])
-        if len(array) == m:
-            answer += min(array) * m
+        if(m == len(array)):
+            answer += min(array) * m * 1
             array = []
     return answer
