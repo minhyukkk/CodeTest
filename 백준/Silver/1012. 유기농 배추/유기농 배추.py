@@ -1,43 +1,82 @@
+# import sys
+# input = sys.stdin.readline
+# from collections import deque
+
+# t = int(input())
+# dx = [-1,1,0,0]
+# dy = [0,0,-1,1]
+
+# def bfs(x,y):
+#     q = deque()
+#     q.append((x,y))
+    
+
+#     while q:
+#         e,r = q.popleft()
+#         visited[e][r] = 1
+
+#         for i in range(4):
+#             nx = e + dx[i]
+#             ny = r + dy[i]
+
+#             if 0 <= nx < n and 0 <= ny < m and graph[nx][ny] == 1 and visited[nx][ny] == 0:
+#                 q.append((nx,ny))
+    
+# for _ in range(t):
+#     n, m, k = list(map(int, input().split()))
+#     graph = [[0] * m for _ in range(n)]
+#     visited = [[0] * m for _ in range(n)]
+#     count = 0
+
+#     for i in range(k):
+#         a,b = map(int, input().split())
+#         graph[a][b] = 1
+
+#     for i in range(n):
+#         for j in range(m):
+#             if graph[i][j] == 1 and visited[i][j] == 0:
+#                 bfs(i,j)
+#                 count += 1
+#     print(count)
+
+import sys
+input = sys.stdin.readline
 from collections import deque
-import sys 
 sys.setrecursionlimit(10**8)
 
-dx = [0,0,1,-1]
-dy = [1,-1,0,0]
-
 t = int(input())
+dx = [-1,1,0,0]
+dy = [0,0,-1,1]
 
-def bfs(visited, a, b):
+def bfs(x,y):
     q = deque()
-    q.append((a,b))
-    visited[a][b] = 0
+    q.append((x,y))
+    graph[x][y] = 0
 
     while q:
-        x, y = q.popleft()
+        e,r = q.popleft()
+        
+
         for i in range(4):
-            nx = x + dx[i]
-            ny = y + dy[i]
+            nx = e + dx[i]
+            ny = r + dy[i]
 
-            if nx < 0 or nx >= n or ny < 0 or ny >= m:
-                continue
-            if visited[nx][ny] == 1:
-                visited[nx][ny] = 0
+            if 0 <= nx < n and 0 <= ny < m and graph[nx][ny] == 1:
+                graph[nx][ny] = 0
                 q.append((nx,ny))
-    return
-
-for i in range(t):
+    
+for _ in range(t):
+    n, m, k = list(map(int, input().split()))
+    graph = [[0] * m for _ in range(n)]
     count = 0
-    n, m, r = map(int, input().split())
-    visited = [[0]*m for _ in range(n)]
 
-    for j in range(r):
-        x,y = map(int, input().split())
-        visited[x][y] = 1
+    for i in range(k):
+        a,b = map(int, input().split())
+        graph[a][b] = 1
 
-    for a in range(n):
-        for b in range(m):
-            if visited[a][b] == 1:
-                bfs(visited, a, b)
-                count += 1  
+    for i in range(n):
+        for j in range(m):
+            if graph[i][j] == 1:
+                bfs(i,j)
+                count += 1
     print(count)
-
